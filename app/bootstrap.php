@@ -28,7 +28,14 @@ if (! file_exists($configFile)) {
     $configFile = __DIR__ . '/../config.json.dist';
 }
 
-$app->register(new ConfigServiceProvider($configFile));
+$replacements = array();
+foreach ($_ENV as $key => $value) {
+    if ('TOGGLE__' === substr($key, 0, 7)) {
+        $replacements[strtolower(str_replace('__', '.', substr($key, 7)))] = $value;
+    }
+}
+
+$app->register(new ConfigServiceProvider($configFile, $replacements));
 
 $app['env'] = getenv('env') ?: 'dev';
 
