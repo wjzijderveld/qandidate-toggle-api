@@ -29,9 +29,9 @@ if (! file_exists($configFile)) {
 }
 
 $replacements = array();
-foreach ($_ENV as $key => $value) {
-    if ('TOGGLE__' === substr($key, 0, 7)) {
-        $replacements[strtolower(str_replace('__', '.', substr($key, 7)))] = $value;
+foreach ($_SERVER as $key => $value) {
+    if ('TOGGLE__' === substr($key, 0, 8)) {
+        $replacements[strtolower(str_replace('__', '.', substr($key, 8)))] = $value;
     }
 }
 
